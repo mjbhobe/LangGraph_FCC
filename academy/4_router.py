@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 from typing import Union
 from rich.console import Console
 from rich.markdown import Markdown
-from langchain_core.messages import HumanMessage
+from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_anthropic import ChatAnthropic
 from langgraph.graph import StateGraph, START, END
@@ -87,19 +87,29 @@ model = ChatAnthropic(
 tools_list = [add, subtract, multiply, divide]
 model_with_tools = model.bind_tools(tools_list)
 
+sys_message = SystemMessage(
+    content="You are a helpful assistant taskes with performing math on a set of inputs"
+)
+
 
 # tool call node
-def llm_inherent_call(message_state: MessagesState) -> MessagesState:
+def assistant(message_state: MessagesState) -> MessagesState:
     """node to call the LLM with a tool call"""
-    return {"messages": [model_with_tools.invoke(message_state["messages"])]}
+    return {
+        "messages": [model_with_tools.invoke(sys_message + message_state["messages"])]
+    }
 
 
 # build our graph
 builder = StateGraph(MessagesState)
-builder.add_node("llm_inherent_call", llm_inherent_call)
+# add nodes
+builder.add_node("assistant", assistant)
 builder.add_node("tools", ToolNode(tools_list))
-builder.add_edge(START, "llm_inherent_call")
-builder.add_conditional_edges("llm_inherent_call", tools_condition)
+builder.add_edge(START, "assistant")
+# build structure
+builder.add_conditional_edges("assistant", tools_condition)
+# loop back from tools to assistant
+builder.add_edge("tools", "assistant")
 builder.add_edge("tools", END)
 graph = builder.compile()
 
