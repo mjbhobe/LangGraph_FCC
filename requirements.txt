@@ -21,14 +21,21 @@ beautifulsoup4
 yfinance
 uvicorn
 rich
+tavily-python
+wikipedia
 
 # langchain common modules
 langchain
+langchain-core
 langchain-community
 langchain-tavily
 langchainhub
-wikipedia
+
+# LangGraph modules
 langgraph
+langgraph-sdk
+langgraph-checkpoint-sqlite
+langsmith
 
 # for OpenAI
 langchain-openai
