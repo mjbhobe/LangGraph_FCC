@@ -2,7 +2,7 @@
 4_router.py - build a basic router, which routes to a tool call or returns
     a message from an LLM
 
-@author: Manish Bhobe
+@author: Manish Bhobé
 My experiments with AI/ML and Gen AI
 Code shared for learning purposes only!
 """

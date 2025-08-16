@@ -2,7 +2,7 @@
 5_agent_react.py - configure a basic math agent with react pattern,
     which should be able to handle cascading math ops, such as 4 *7 / 12 + 45
 
-@author: Manish Bhobe
+@author: Manish Bhobé
 My experiments with AI/ML and Gen AI
 Code shared for learning purposes only!
 """

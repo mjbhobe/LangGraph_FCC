@@ -2,7 +2,7 @@
 2_router_graph.py - build a basic router graph, where a node
    branches out to 2 possible nodes and then to END
 
-@author: Manish Bhobe
+@author: Manish Bhobé
 My experiments with Python, AI/ML and Gen AI
 Code shared for learning purposed only!
 """
